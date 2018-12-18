@@ -103,35 +103,10 @@ class Crontab extends \web\common\controller\Controller{
         if($balance != false){
             $before_amount = $balance['before_amount'];
             $after_amount = $balance['amount'];
-//            $type = 0; //奖励类型 0=投注分红(全网分红)，1=胜利战队分红，2=胜利者分红，3=邀请分红
-//            $remark  = 't3d全网分红';
             $rewardM->addRecord($user_id, $coin_id, $before_amount, $amount, $after_amount, $scene, $game_id,$remark);
             //分红值增加
             $keyRecordM->where(['game_id' => $game_id, 'user_id' => $user_id])->setInc('bonus_amount',$amount);
         }
-
-//        $record_list = $keyRecordM->getRecord($user_id, $game_id);
-//        if(!empty($record_list)){
-//            $team_total_key = $keyRecordM->getTotalByGameAndTeamID($game_id);
-//            foreach($record_list as $k => $record){
-//                if($record['key_num'] <= 0){
-//                    continue;
-//                }
-//                $user_id = $record['user_id'];
-//                $rate = $this->getUserRate($team_total_key, $record['key_num']);
-//                $_amount = $amount * $rate; //所得分红
-//                //添加余额, 添加分红记录
-//                $balance = $balanceM->getBalanceByCoinID($user_id, $coin_id);
-//                $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
-//                if($balance != false){
-//                    $before_amount = $balance['before_amount'];
-//                    $after_amount = $balance['amount'];
-//                    $type = 0; //奖励类型 0=投注分红(全网分红)，1=胜利战队分红，2=胜利者分红，3=邀请分红
-//                    $remark  = 't3d全网分红';
-//                    $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id,$remark);
-//                }
-//            }
-//        }
         return true;
     }
 
