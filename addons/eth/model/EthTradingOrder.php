@@ -186,7 +186,7 @@ class EthTradingOrder extends \web\common\model\BaseModel {
         if($filter!=''){
             $sql = 'select sum(amount) as count_total from ('.$sql.') as tab where '.$filter;
         }
-        print_r($sql);exit();
+//        print_r($sql);exit();
         $count = $this->query($sql);
         return $count[0]['count_total'];
     }
@@ -196,7 +196,7 @@ class EthTradingOrder extends \web\common\model\BaseModel {
             . " FROM tp_eth_trading_order o "
             . " LEFT JOIN tp_member_account b ON b.id = o.user_id "
             . " LEFT JOIN tp_coins c ON c.id = o.coin_id "
-            . " WHERE 1=1 and";
+            . " WHERE 1=1 and ";
         if($filter)
             $sql .= $filter;
         $count = $this->query($sql);
