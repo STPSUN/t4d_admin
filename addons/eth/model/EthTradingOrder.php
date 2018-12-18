@@ -200,7 +200,7 @@ class EthTradingOrder extends \web\common\model\BaseModel {
         if($filter)
             $sql .= $filter;
         $count = $this->query($sql);
-        return $count[0]['count_total'];
+        return $count[0];
     }
     
 

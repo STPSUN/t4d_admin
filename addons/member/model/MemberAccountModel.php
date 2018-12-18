@@ -25,7 +25,7 @@ class MemberAccountModel extends \web\common\model\BaseModel
 
 //        $RewardRecordM = new \addons\fomo\model\RewardRecord();
 //        $sql = "select a.*,ifnull(sum(b.amount),0) reward_total from ({$sql}) a left join {$RewardRecordM->getTableName()} b on a.id = b.user_id group by a.id";
-
+//
 //        $gameM = new \addons\fomo\model\Game();
 //        $game = $gameM->getRunGame();
 //        if(!$game){
@@ -33,7 +33,7 @@ class MemberAccountModel extends \web\common\model\BaseModel
 //        }
 //        $game = $game[0];
 //        $game_id = $game['id'];
-
+//
 //        $keyRecordM = new \addons\fomo\model\KeyRecord();
 //        $sql = "select a.*,ifnull(sum(key_num),0) now_key_num from ({$sql}) a left join {$keyRecordM->getTableName()} b on a.id = b.user_id and b.game_id = {$game_id} group by a.id";
 //
