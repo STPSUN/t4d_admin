@@ -235,7 +235,7 @@ class Fomobase extends \web\index\controller\AddonIndexBase{
                 }
 
                 $balanceM = new \addons\member\model\Balance();
-                $balance = $balanceM->getBalanceByCoinID($this->user_id, $coin_id);
+                $balance = $balanceM->getBalanceByCoinID($this->user_id, $coin_id,2);
                 if(empty($balance)){
                     return $this->failData(lang('Lack of balance'));
                 }

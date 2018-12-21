@@ -19,6 +19,7 @@ define('ADDONS_PATH', __DIR__ . '/../addons/');
 define('UPLOADFOLDER', './uploads/');
 $url = $_SERVER['SERVER_NAME'];
 if($url != 'mank.ddpor.vip')
+//    if($url != 't4dadmin.com')
     exit();
 
 // 加载框架引导文件

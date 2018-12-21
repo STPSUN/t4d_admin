@@ -66,10 +66,6 @@ class Trade extends \web\user\controller\AddonUserBase{
         $eth_rate = bcdiv($cny,7,4);
 //        $sysM = new \web\common\model\sys\SysParameterModel();
 //        $eth_rate = $sysM->getValByName('eth_rate');
-        foreach ($rows as &$v)
-        {
-            $v['eth_amount'] = bcdiv($v['amount'],$eth_rate,8);
-        }
 
         $count_total = $m->getCountTotal2($filter);
         return $this->toTotalDataGrid($total, $rows,$count_total);
@@ -142,7 +138,8 @@ class Trade extends \web\user\controller\AddonUserBase{
                 $data = $tradeM->getDetail($id);
                 if(!empty($data)){
                     $user_id = $data['user_id'];
-                    $amount = $data['amount'];
+                    $amount = $data['eops_amount'];
+//                    echo $amount;exit();
                     $coin_id = $data['coin_id'];
                     $tax = $data['tax'];
                     $tradeM->startTrans();
@@ -151,7 +148,7 @@ class Trade extends \web\user\controller\AddonUserBase{
                         if($data['tax'] > 0) $amount += $data['tax'];
                         //返还金额
                         $balanceM = new \addons\member\model\Balance();
-                        $balance = $balanceM->updateBalance($user_id, $amount, $coin_id, true);
+                        $balance = $balanceM->updateBalance($user_id, $amount, $coin_id, true,2);
                         if(!$balance){
                             $tradeM->rollback();
                             return $this->failData('退单失败');
