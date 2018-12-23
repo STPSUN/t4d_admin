@@ -18,4 +18,54 @@ class Test extends Base
 
         $m->excute();
     }
+
+    public function updateBalance()
+    {
+        $memM = new \addons\member\model\MemberAccountModel();
+        $data = $memM->alias('u')
+            ->field('k.key_num,u.id')
+            ->join('fomo_key_record k','u.id=k.user_id','right')
+            ->where('u.is_frozen',0)
+            ->select();
+
+        $balanceM = new \addons\member\model\Balance();
+        foreach ($data as $v)
+        {
+            $amount = $v['key_num'] * 10;
+            $balanceM->save([
+                'amount' => $amount,
+            ],[
+                'user_id' => $v['id'],
+                'coin_id'   => 2,
+                'type'      => 1,
+            ]);
+        }
+
+        echo 11;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
