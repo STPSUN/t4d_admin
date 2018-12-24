@@ -52,7 +52,6 @@ class Crontab extends \web\common\controller\Controller{
                         ]);
 
                         $queueM->commit();
-                        echo 1;
 
                     } catch (\Exception $ex) {
                         $queueM->rollback();
