@@ -1,0 +1,88 @@
+{extend name="$BASE_LIST" /}
+{block name="body"}
+<style>
+    .model{
+        margin-left: 30px;
+        width:300px;
+        height: 300px;
+        float: left;
+    }
+    .span{
+        float: left;
+    }
+</style>
+<div class="right-main">
+    <div class="page_nav" id="js_page_nav"><span class="page_title">{$page_nav}</span></div>
+    <div id="js_main_header" class="ui-form main_header">
+    </div>
+</div>
+
+<div>
+    <div class="model">
+        <h4>会员数量</h4>
+        <hr>
+        <span>{$member_num}</span>
+    </div>
+
+    <div class="model">
+        <h4>局数</h4>
+        <hr>
+        <span>{$game_num}</span>
+    </div>
+
+    <div class="model">
+        <h4>当局各分红总数</h4>
+        <hr>
+        <span >全网分红：{$current_award.whole}</span><br>
+        <span >邀请分红：{$current_award.invite}</span><br>
+        <span >最后分红：{$current_award.last_winner}</span><br>
+        <span >大赢家分红：{$current_award.big_winner}</span><br>
+        <span >奖金池触手分红：{$current_award.pool_parent}</span><br>
+        <span >节点分红：{$current_award.node}</span><br>
+        <span >中期奖：{$current_award.mid}</span><br>
+    </div>
+
+    <div class="model">
+        <h4>总局各分红总数</h4>
+        <hr>
+        <span >全网分红：{$award.whole}</span><br>
+        <span >邀请分红：{$award.invite}</span><br>
+        <span >最后分红：{$award.last_winner}</span><br>
+        <span >大赢家分红：{$award.big_winner}</span><br>
+        <span >奖金池触手分红：{$award.pool_parent}</span><br>
+        <span >节点分红：{$award.node}</span><br>
+        <span >中期奖：{$award.mid}</span><br>
+    </div>
+
+   <div class="model">
+        <h4>当局购买key价值多少EOPS</h4>
+        <hr>
+        <span >EOPS数量：{$current_eops}</span><br>
+    </div>
+
+    <div class="model">
+        <h4>总局购买key价值多少EOPS</h4>
+        <hr>
+        <span >EOPS数量：{$total_eops}</span><br>
+    </div>
+
+    <div class="model">
+        <h4>拨币总数</h4>
+        <hr>
+        <span >EOPS数量：{$admin_eops}</span><br>
+    </div>
+
+    <div class="model">
+        <h4>平台总计EOPS</h4>
+        <hr>
+        <span >冻结：{$froze_amount}</span><br>
+        <span >可用：{$use_amount}</span><br>
+    </div>
+
+</div>
+
+{/block}
+{block name="script"}
+<script type="text/javascript">
+</script>
+{/block}
