@@ -27,8 +27,9 @@ class Crontab extends \web\common\controller\Controller{
         if(!empty($list)){
             try
             {
-                $queueM->startTrans();
                 foreach($list as $data){
+                    try{
+                        $queueM->startTrans();
                         $res = false;
                         if($data['type'] == 1){
                             $res = $this->sendT3d($data['user_id'],$data['coin_id'],$data['amount'], $data['game_id'], $data['scene']);
@@ -36,7 +37,7 @@ class Crontab extends \web\common\controller\Controller{
 
                         if(!$res)
                         {
-//                            $queueM->rollback();
+                            $queueM->rollback();
                             return json($this->failData('发放失败'));
                         }
 
@@ -49,13 +50,18 @@ class Crontab extends \web\common\controller\Controller{
                         ],[
                             'id' => $data['id'],
                         ]);
+
+                        $queueM->commit();
+
+                    } catch (\Exception $ex) {
+                        $queueM->rollback();
+                        return json($this->failData($ex->getMessage()) );
+                    }
                 }
 
-                $queueM->commit();
                 echo '处理成功';
             }catch (\Exception $e)
             {
-                $queueM->rollback();
                 echo '处理失败';
                 return json($this->failData($e->getMessage()) );
             }
