@@ -38,7 +38,7 @@ class Crontab extends \web\common\controller\Controller{
                         if(!$res)
                         {
                             $queueM->rollback();
-                            return json($this->failData('发放失败'));
+                            return json($this->failData('false'));
                         }
 
                         //更新发放状态
@@ -52,6 +52,7 @@ class Crontab extends \web\common\controller\Controller{
                         ]);
 
                         $queueM->commit();
+                        echo 1;
 
                     } catch (\Exception $ex) {
                         $queueM->rollback();
@@ -59,10 +60,10 @@ class Crontab extends \web\common\controller\Controller{
                     }
                 }
 
-                echo '处理成功';
+                echo 'success';
             }catch (\Exception $e)
             {
-                echo '处理失败';
+                echo 'false';
                 return json($this->failData($e->getMessage()) );
             }
         }
@@ -81,9 +82,9 @@ class Crontab extends \web\common\controller\Controller{
         $rewardM = new \addons\fomo\model\RewardRecord();
         $balanceS = new \addons\fomo\service\Balance();
 
-        $amount = $this->limitAmount($user_id,$game_id,$amount);
-        if(!$amount)
-            return true;
+//        $amount = $this->limitAmount($user_id,$game_id,$amount);
+//        if(!$amount)
+//            return true;
 
         //全网分红
         if($scene == 0)
