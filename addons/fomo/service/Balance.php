@@ -20,14 +20,14 @@ class Balance extends \web\index\controller\AddonIndexBase
     public function updateBalanceByBonus($user_id,$amount,$coin_id)
     {
         $balanceM = new \addons\member\model\Balance();
-        $balanceM->startTrans();
+//        $balanceM->startTrans();
         try
         {
             $frost_amount = bcmul($amount,0.3,8);
             $res = $balanceM->updateBalance($user_id,$frost_amount,$coin_id,true);
             if(!$res)
             {
-                $balanceM->rollback();
+//                $balanceM->rollback();
                 return false;
             }
 
@@ -35,17 +35,17 @@ class Balance extends \web\index\controller\AddonIndexBase
             $res = $balanceM->updateBalanceByBonus($user_id,$use_amount,$coin_id);
             if(!$res)
             {
-                $balanceM->rollback();
+//                $balanceM->rollback();
                 return false;
             }
 
         }catch (\Exception $e)
         {
-            $balanceM->rollback();
+//            $balanceM->rollback();
             return false;
         }
 
-        $balanceM->commit();
+//        $balanceM->commit();
         return true;
     }
 
