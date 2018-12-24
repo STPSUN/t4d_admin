@@ -91,5 +91,41 @@ class TradingRecord extends \web\common\model\BaseModel{
         else
             return 0;
     }
+
+    public function getTotal2($filter = '')
+    {
+        $sql = "SELECT u.username,u.phone,o.amount,u2.username to_username,u2.phone to_phone "
+            . " FROM tp_trading_record AS o"
+            . " LEFT JOIN tp_member_account AS u ON u.id = o.user_id"
+            . " LEFT JOIN tp_member_account AS u2 ON u2.id = o.to_user_id"
+            . " where o.type = 11 and ";
+        if($filter)
+            $sql .= $filter;
+
+        $count = $this->query($sql);
+        return count($count);
+    }
+
+    public function getList2($pageIndex = -1, $pageSize = -1, $filter = '',$order = 'o.update_time desc') {
+        $sql = "SELECT u.username,u.phone,o.amount,u2.username to_username,u2.phone to_phone,o.update_time "
+            . " FROM tp_trading_record AS o"
+            . " LEFT JOIN tp_member_account AS u ON u.id = o.user_id"
+            . " LEFT JOIN tp_member_account AS u2 ON u2.id = o.to_user_id"
+            . " where o.type = 11 and ";
+        if($filter)
+            $sql .= $filter;
+        return $this->getDataListBySQL($sql, $pageIndex, $pageSize, $order);
+    }
+
+    public function getCountTotal2($filter = '') {
+        $sql = "SELECT sum(o.amount) AS total_amount"
+            . " FROM tp_trading_record AS o"
+            . " LEFT JOIN tp_member_account AS u ON u.id = o.user_id"
+            . " where o.type = 11 and ";
+        if($filter)
+            $sql .= $filter;
+        $count = $this->query($sql);
+        return $count[0];
+    }
     
 }

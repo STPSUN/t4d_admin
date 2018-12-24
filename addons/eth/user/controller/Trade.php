@@ -278,6 +278,80 @@ class Trade extends \web\user\controller\AddonUserBase{
 
         exit();
     }
+
+    public function excel2()
+    {
+        set_time_limit(0);
+        $keyM = new \addons\fomo\model\KeyRecord();
+        $memM = new \addons\member\model\MemberAccountModel();
+        $rows = $memM->alias('u')
+            ->field('k.key_num,u.id')
+            ->join('fomo_key_record k','u.id=k.user_id','right')
+            ->where('u.is_frozen',0)
+            ->select();
+
+        $data = [];
+        foreach ($rows as $v)
+        {
+            $temp = [];
+            $temp[] = $v['username'];
+            $temp[] = $v['phone'];
+            $temp[] = $v['key_num'];
+
+            $data[] = $temp;
+        }
+
+        $fileName = 'key购买统计.xlsx';
+        $headArr = ['用户名称','手机号','key数量'];
+
+        Loader::import('PHPExcel.Classes.PHPExcel');
+        Loader::import('PHPExcel.Classes.PHPExcel.IOFactory.PHPExcel_IOFactory');
+        $objPHPExcel = new \PHPExcel();
+        $objPHPExcel->getProperties();
+
+
+        $key = ord("A");
+
+        foreach ($headArr as $v)
+        {
+            $colum = chr($key);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($colum . '1',$v);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue($colum . '1',$v);
+            $key += 1;
+        }
+
+        $c = 2;
+        $objActSheet = $objPHPExcel->getActiveSheet();
+        $objActSheet->getColumnDimension('A')->setWidth('10');
+        $objActSheet->getColumnDimension('B')->setWidth('12');
+        $objActSheet->getColumnDimension('C')->setWidth('12');
+
+        foreach ($data as $key => $r)
+        {
+            $span = ord("A");
+
+            foreach ($r as $keyName => $value)
+            {
+                $objActSheet->setCellValue(chr($span) . $c,$value);
+                $span++;
+            }
+
+            $c++;
+        }
+
+
+        $fileName = iconv("utf-8","gb2312",$fileName);
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        header("Content-Type: application/vnd.ms-excel");
+        header("Content-Disposition:attachment;filename='$fileName'");
+        header("Cache-Control:max-age=0");
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel,"Excel2007");
+        $objWriter->save("php://output");
+
+        exit();
+    }
 }
 
 
